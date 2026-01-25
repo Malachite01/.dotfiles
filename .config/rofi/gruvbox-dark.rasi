@@ -1,0 +1,142 @@
+* {
+    // Gruvbox Hard palette
+    bg: rgba(29, 32, 33, 0.831);
+    bg0: #1d2021;         // dark background
+    bg1: #282828;         // background
+    bg2: #32302f;         // lighter background
+    bg3: #3c3836;         // even lighter
+    
+    fg0: #fbf1c7;         // lightest foreground
+    fg1: #ebdbb2;         // light foreground
+    fg2: #d5c4a1;         // foreground
+    fg3: #bdae93;         // darker foreground
+    
+    red: #ea6962;
+    green: #a9b665;
+    yellow: #d8a657;
+    blue: #7daea3;
+    purple: #d3869b;
+    aqua: #89b482;
+    orange: #e78a4e;
+    
+    background-color: transparent;
+    text-color: @fg1;
+    font: "JetBrainsMono Nerd Font 10";
+    show-icons: true;
+    icon-theme: "Papirus";
+}
+window {
+    height: 300;
+    width: 500;
+    border-radius: 10;
+    background-color: @bg;
+    border: 1;
+    border-color: @bg3;
+    padding: 15;
+}
+mainbox {
+    spacing: 10;
+    padding: 0;
+    children: [inputbar, message, listview];
+    background-color: transparent;
+}
+inputbar {
+    padding: 8 15;
+    border-radius: 5;
+    spacing: 10;
+    children: [prompt, entry];
+    border: 1;
+    border-color: @bg3;
+    background-color: @bg;
+}
+prompt {
+    text-color: @orange;
+    background-color: transparent;
+}
+entry {
+    placeholder: "...";
+    placeholder-color: @fg3;
+    text-color: @fg0;
+    background-color: transparent;
+}
+message {
+    padding: 10;
+    background-color: @bg2;
+    border-color: @blue;
+    border: 0 0 2 0;
+}
+textbox {
+    text-color: @fg1;
+    background-color: transparent;
+}
+listview {
+    padding: 5 0;
+    border-radius: 0 0 10 10;
+    background-color: transparent;
+    dynamic: false;
+    lines: 8;
+    spacing: 4;
+}
+element {
+    padding: 8 12;
+    border-radius: 8;
+    text-color: @fg1;
+    background-color: transparent;
+    border: 1;
+    border-color: transparent;
+}
+element.normal.normal {
+    text-color: @fg1;
+}
+element.selected.normal {
+    text-color: @fg0;
+    background-color: @bg;
+    border-radius: 10;
+}
+element.normal.active {
+    background-color: @bg;
+    text-color: @green;
+}
+element.alternate.active {
+    background-color: @bg2;
+    text-color: @green;
+}
+element.selected.active {
+    background-color: @bg1;
+    text-color: @green;
+    border-radius: 10;
+}
+element.normal.urgent {
+    background-color: @bg;
+    text-color: @red;
+}
+element.alternate.urgent {
+    background-color: @bg2;
+    text-color: @red;
+}
+element.selected.urgent {
+    background-color: @bg1;
+    text-color: @red;
+    border-radius: 10;
+}
+element-text {
+    background-color: transparent;
+    text-color: inherit;
+    vertical-align: 0.5;
+}
+element-icon {
+  size: 32;
+  margin: 0 10 0 0;
+
+  background-color: inherit;
+  text-color:       inherit;
+
+  vertical-align: 0.5;
+}
+error-message {
+    padding: 15;
+    background-color: @bg;
+    border: 2;
+    border-color: @red;
+    border-radius: 12;
+}

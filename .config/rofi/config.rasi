@@ -1,0 +1,9 @@
+configuration {
+    modi: "drun,run";
+    show-icons: true;
+    display-drun: "";
+    hover-select: true;
+    me-select-entry: "";
+    me-accept-entry: "MousePrimary";
+}
+@theme "gruvbox-dark"
