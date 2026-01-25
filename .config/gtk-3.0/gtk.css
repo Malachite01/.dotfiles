@@ -1,0 +1,27 @@
+/* Sidebar de Nautilus - colonne de gauche */
+.nautilus-window sidebar row {
+    padding: 10px 16px;
+    margin: 3px 8px;
+    border-radius: 6px;
+}
+
+/* Icônes dans la sidebar */
+.nautilus-window sidebar row image {
+    margin-right: 14px;
+    min-width: 20px;
+}
+
+/* Labels (texte) dans la sidebar */
+.nautilus-window sidebar row label {
+    margin-left: 4px;
+}
+
+/* Espacement général de la sidebar */
+.nautilus-window sidebar {
+    padding: 12px 8px;
+}
+
+/* Espacement entre les sections */
+.nautilus-window sidebar separator {
+    margin: 8px 0;
+}
