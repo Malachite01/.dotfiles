@@ -1,0 +1,200 @@
+/* Transparent background */
+@define-color bg rgba(29, 32, 33, 0.831);
+
+/* Background and foreground colors */
+@define-color bg0 #1d2021;
+@define-color bg1 #282828;
+@define-color bg2 #32302f;
+@define-color bg3 #3c3836;
+@define-color bg4 #504945;
+@define-color fg0 #fbf1c7;
+@define-color fg1 #ebdbb2;
+@define-color fg2 #d5c4a1;
+@define-color fg3 #bdae93;
+
+/* Heavy colors */
+@define-color hgruv_blue #458588;
+@define-color hgruv_aqua #689d6a;
+@define-color hgruv_green #A8B024;
+@define-color hgruv_purple #b16286;
+@define-color hgruv_red #FB2E2B;
+@define-color hgruv_orange #d65d0e;
+@define-color hgruv_yellow #F9A827;
+
+/* Soft colors */
+@define-color lgruv_blue #7daea3;
+@define-color lgruv_aqua #89b482;
+@define-color lgruv_green #a9b665;
+@define-color lgruv_purple #d3869b;
+@define-color lgruv_red #ea6962;
+@define-color lgruv_orange #e78a4e;
+@define-color lgruv_yellow #d8a657;
+
+* {
+  border: none;
+  /* font-family: "JetBrainsMono Nerd Font"; */
+
+  font-size: .95rem;
+  font-weight: 500;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+}
+
+window#waybar {
+  background: @bg;
+  /* background: @bg0; */
+  padding: 0;
+  margin: 0;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  /* border-radius: 10px; */
+}
+
+tooltip {
+  background: @bg1;
+  border: 1px solid @bg3;
+}
+
+tooltip label {
+  color: @fg0;
+}
+
+.modules-left, .modules-center, .modules-right {
+  padding: 1px 10px;
+  /* margin: 5px 8px 0px 8px; */
+  margin: 0px;
+  /* background-color: @bg1; */
+  /* border-radius: 7px; */
+}
+
+.modules-left {
+  border-radius: 0 0 10px 0px;
+  font-family: "FiraCode Nerd Font";
+}
+
+.modules-center {
+  font-size: .5rem;
+  border-radius: 0 0 10px 10px;
+}
+
+.modules-right {
+  border-radius: 0 0 0px 10px;
+  font-family: "JetBrainsMono Nerd Font";
+}
+
+#clock, #network, #custom-quickmenu, #pulseaudio, #battery, #custom-power {
+  padding: 0 2px 0 5px;
+  margin: 0 2px;
+  /* background-color: @bg1; */
+  border-radius: 5px;
+  color: @fg0;
+}
+
+
+/* _______________
+  | LEFT MODULES |
+  --------------- */
+
+#custom-logo {
+  font-family: "JetBrainsMono Nerd Font";
+  font-size: .92rem;
+}
+#custom-logo:hover {
+  color: @fg3;
+}
+
+#clock {
+  font-family: "FiraCode Nerd Font";
+  font-size: .92rem;
+  background-color: transparent;
+  color: @fg1;
+  border-radius: 5px;
+}
+
+.calendar-span {
+  padding: 0;
+  font-family: "FiraCode Nerd Font";
+}
+
+tooltip {
+  background-color: @bg;
+  border: 1px solid #32302f;
+  font-family: "FiraCode Nerd Font";
+}
+
+
+
+/* _________________
+  | CENTER MODULES |
+  ----------------- */
+#workspaces {
+  padding: 0 15px;
+  border-radius: 0 0 10px 10px;
+  transition: background-color 0.2s ease-in-out;
+}
+#workspaces:hover {
+  background-color: @bg2;
+}
+
+
+#workspaces button {
+  background-color: @bg3;
+  margin: 0;
+  border-radius: 100px;
+  min-width: 20px;
+  font-weight: bolder;
+  transition: all 0.2s ease-in-out;
+  box-shadow:0px 0px 0px 6.5px @bg0 inset;
+}
+
+#workspaces button.active {
+  min-width: 45px;
+  background-color: @bg4;
+}
+
+/* ________________
+  | RIGHT MODULES |
+  ---------------- */
+#pulseaudio {
+  font-family: "FiraCode Nerd Font";
+}
+
+#battery {
+  color: @hgruv_green;
+  font-family: "FiraCode Nerd Font";
+}
+
+#battery.warning {
+  color: @hgruv_yellow;
+}
+
+#battery.charging {
+  color: @fg0;
+  background-color: @hgruv_green;
+}
+
+@keyframes blink {
+  to {
+    color: @fg0;
+  }
+}
+
+#battery.critical:not(.charging) {
+  color: @hgruv_red;
+  animation-name: blink;
+  animation-duration: 0.7s;
+  animation-timing-function: steps(12);
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+#custom-power {
+  background-color: @bg1;
+  color: @hgruv_red;
+  padding: 0 12px 0 8px;
+}
+
+#custom-power:hover {
+  background-color: @hgruv_red;
+  color: @bg1;
+}
