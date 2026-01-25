@@ -13,8 +13,8 @@ setopt SHARE_HISTORY
 autoload -Uz compinit && compinit
 
 # Plugins (dnf)
-source ~/.config/kitty/zsh-autosuggestions/zsh-autosuggestions.zsh 2>/dev/null
-source ~/.config/kitty/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
+source ~/.config/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh 2>/dev/null
+source ~/.config/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
 
 # Starship prompt
 eval "$(starship init zsh)"
