@@ -23,6 +23,6 @@ stow --adopt .
 
 ```
 
-For a more in depth tutorial [click here](https://www.youtube.com/watch?v=y6XCebnB9gs)
+For a more in depth tutorial [click here](https://www.youtube.com/watch?v=NoFiYOqnC4o)
 
 # Structure
