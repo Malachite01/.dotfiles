@@ -17,6 +17,10 @@ cp ~/.zshrc .
 ls -lah
 # rm ~/.zshrc or mv ~/.zshrc ~/.zshrc.bak
 
+# For fastfetch
+cp -r ~/.config/fastfetch ~/.dotfiles/.config/fastfetch
+stow --adopt .
+
 ```
 
 For a more in depth tutorial [click here](https://www.youtube.com/watch?v=y6XCebnB9gs)
