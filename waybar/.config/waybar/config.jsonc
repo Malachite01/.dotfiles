@@ -1,138 +1,124 @@
 {
-    "layer": "top",
-    "modules-left": [
-        "custom/logo",
-        "clock"
-    ],
-    "modules-center": [
-        "hyprland/workspaces"
-    ],
-    "modules-right": [
-        "custom/quickmenu",
-        "pulseaudio",
-        "network",
-        "battery",
-        "custom/power"
-    ],
+  "layer": "top",
+  "modules-left": ["custom/logo", "clock"],
+  "modules-center": ["hyprland/workspaces"],
+  "modules-right": [
+    "custom/quickmenu",
+    "custom/caffeine",
+    "pulseaudio",
+    "network",
+    "battery",
+    "custom/power",
+  ],
 
+  //    _______________
+  //   | LEFT MODULES |
+  //   ---------------
+  "custom/logo": {
+    "format": " ",
+    "on-click": "rofi -show drun -icon-theme 'Papirus'",
+    "tooltip": false,
+  },
+  "clock": {
+    "locale": "fr_FR.UTF-8",
+    "format": "{:L%a %d %b %H:%M}",
+    "format-alt": "{:%H:%M}",
+    "tooltip-format": "<tt><small >{calendar}</small></tt>",
+    "calendar": {
+      "mode": "month",
+      "weeks-pos": "left",
+      "on-scroll": 1,
+      "format": {
+        "months": "<span color='#7DAEA3'><b>{}</b></span>",
+        "days": "<span color='#fbf1c7'> {} </span>",
+        "weeks": "<span color='#d5c4a1'><b>{}</b></span>",
+        "weekdays": "<span color='#d5c4a1'><b>{}</b></span>",
+        "today": "<span color='#7DAEA3'><b>{}</b></span>",
+      },
+    },
+    "actions": {
+      "on-click-right": "mode",
+      "on-scroll-up": "shift_up",
+      "on-scroll-down": "shift_down",
+    },
+  },
 
-    //    _______________
-    //   | LEFT MODULES |
-    //   ---------------
-    "custom/logo": {
-        "format": " ",
-        "on-click": "rofi -show drun -icon-theme 'Papirus'",
-        "tooltip": false
+  //    _________________
+  //   | CENTER MODULES |
+  //   -----------------
+  "hyprland/workspaces": {
+    // "format": "{name}",
+    "format": "",
+    "persistent-workspaces": {
+      "*": 3,
     },
-    "clock": {
-        "locale": "fr_FR.UTF-8",
-        "format": "{:%a. %d %b, %H:%M}",
-        "format-alt": "{:%H:%M}",
-        "tooltip-format": "<tt><small >{calendar}</small></tt>",
-        "calendar": {
-            "mode": "month",
-            "weeks-pos": "left",
-            "on-scroll": 1,
-            "format": {
-                "months": "<span color='#7DAEA3'><b>{}</b></span>",
-                "days": "<span color='#fbf1c7'> {} </span>",
-                "weeks": "<span color='#d5c4a1'><b>{}</b></span>",
-                "weekdays": "<span color='#d5c4a1'><b>{}</b></span>",
-                "today": "<span color='#7DAEA3'><b>{}</b></span>"
-            }
-        },
-        "actions": {
-            "on-click-right": "mode",
-            "on-scroll-up": "shift_up",
-            "on-scroll-down": "shift_down"
-        }
-    },
+    "on-click": "qs ipc -c overview call overview toggle",
+  },
 
-    //    _________________
-    //   | CENTER MODULES |
-    //   -----------------
-    "hyprland/workspaces": {
-        // "format": "{name}",
-        "format": "",
-        "persistent-workspaces": {
-            "*": 3
-        },
-        "on-click": "qs ipc -c overview call overview toggle"
+  //    ________________
+  //   | RIGHT MODULES |
+  //   ----------------
+  "custom/quickmenu": {
+    "format": "󰎟 ",
+    "on-click": "~/.config/rofi/launchers/type-4/launcher.sh",
+    "tooltip": false,
+  },
+  "custom/caffeine": {
+    "exec": "[[ -f /tmp/hypr-caffeine-state ]] && echo '󰅶 ' || echo ''",
+    "interval": 2,
+  },
+  "pulseaudio": {
+    // "format": " {icon} {volume}%",
+    // "format-bluetooth": " {icon} {volume}%",
+    "format": "{icon}",
+    "format-bluetooth": "{icon}",
+    "format-muted": " ",
+    "tooltip-format": "{desc} {volume}%",
+    "format-icons": {
+      "alsa_output.pci-0000_00_1f.3.analog-stereo": "",
+      "alsa_output.pci-0000_00_1f.3.analog-stereo-muted": "",
+      "headphone": "",
+      "hands-free": "",
+      "headset": "",
+      "phone": "",
+      "phone-muted": "",
+      "portable": "",
+      "car": "",
+      "default": [" ", " ", " ", " "],
     },
-    
-    //    ________________
-    //   | RIGHT MODULES |
-    //   ----------------
-    "custom/quickmenu": {
-        "format": "󰎟 ",
-        "on-click": "~/.config/rofi/launchers/type-4/launcher.sh",
-        "tooltip": false
+    "scroll-step": 1,
+    "on-click": "pavucontrol",
+    "ignored-sinks": ["Easy Effects Sink"],
+  },
+  "network": {
+    "interface": "wlp2s0",
+    "format": "{ifname}",
+    // "format-wifi": "{essid} ({signalStrength}%) ",
+    "format-wifi": "{icon}",
+    "format-ethernet": " {bandwidthDownBytes}  {bandwidthUpBytes} {ipaddr}/{cidr} 󰊗 ",
+    "format-disconnected": "󰤫  ", //An empty format will hide the module.
+    "tooltip-format": "{ifname} via {gwaddr} 󰊗 ",
+    "tooltip-format-wifi": " {icon} {essid} ({signalStrength}%) ",
+    "tooltip-format-ethernet": "{ifname}  ",
+    "tooltip-format-disconnected": "Disconnected",
+    "format-icons": ["󰤯 ", "󰤟 ", "󰤢 ", "󰤥 ", "󰤨 "],
+    "max-length": 50,
+  },
+  "battery": {
+    "format": "{icon}",
+    "format-alt": "{icon} {capacity}%",
+    "format-icons": [" ", " ", " ", " ", " "],
+    "format-plugged": "{icon}",
+    "format-charging": "{icon}",
+    "states": {
+      "warning": 40,
+      "critical": 20,
     },
-    "pulseaudio": {
-        // "format": " {icon} {volume}%",
-        // "format-bluetooth": " {icon} {volume}%",
-        "format": "{icon}",
-        "format-bluetooth": "{icon}",
-        "format-muted": " ",
-        "tooltip-format": "{desc} {volume}%",
-        "format-icons": {
-            "alsa_output.pci-0000_00_1f.3.analog-stereo": "",
-            "alsa_output.pci-0000_00_1f.3.analog-stereo-muted": "",
-            "headphone": "",
-            "hands-free": "",
-            "headset": "",
-            "phone": "",
-            "phone-muted": "",
-            "portable": "",
-            "car": "",
-            "default": [
-                " ",
-                " ",
-                " ",
-                " "
-            ]
-        },
-        "scroll-step": 1,
-        "on-click": "pavucontrol",
-        "ignored-sinks": [
-            "Easy Effects Sink"
-        ]
-    },
-    "network": {
-        "interface": "wlp2s0",
-        "format": "{ifname}",
-        // "format-wifi": "{essid} ({signalStrength}%) ",
-        "format-wifi": "{icon}",
-        "format-ethernet": " {bandwidthDownBytes}  {bandwidthUpBytes} {ipaddr}/{cidr} 󰊗 ",
-        "format-disconnected": "󰤫  ", //An empty format will hide the module.
-        "tooltip-format": "{ifname} via {gwaddr} 󰊗 ",
-        "tooltip-format-wifi": " {icon} {essid} ({signalStrength}%) ",
-        "tooltip-format-ethernet": "{ifname}  ",
-        "tooltip-format-disconnected": "Disconnected",
-        "format-icons": ["󰤯 ", "󰤟 ", "󰤢 ", "󰤥 ", "󰤨 "],
-        "max-length": 50
-    },
-    "battery": {
-        "format": "{icon}",
-        "format-alt": "{icon} {capacity}%",
-        "format-icons": [
-            " ",
-            " ",
-            " ",
-            " ",
-            " "
-        ],
-        "format-plugged": "{icon}",
-        "format-charging": "{icon}",
-        "states": {
-            "warning": 40,
-            "critical": 20
-        },
-        "tooltip-format": " {capacity}% - {power}W - {timeTo}"
-    },
-    "custom/power": {
-        "format": "",
-        "on-click": "~/.config/rofi/powermenu/powermenu.sh",
-        "tooltip": false
-    }
+    "tooltip-format": " {capacity}% - {power}W - {timeTo}",
+  },
+  "custom/power": {
+    "format": "",
+    "on-click": "~/.config/rofi/powermenu/powermenu.sh",
+    "tooltip": false,
+  },
 }

@@ -34,7 +34,7 @@
   border: none;
   /* font-family: "JetBrainsMono Nerd Font"; */
 
-  font-size: .95rem;
+  font-size: 0.95rem;
   font-weight: 500;
   min-height: 0;
   margin: 0;
@@ -59,7 +59,9 @@ tooltip label {
   color: @fg0;
 }
 
-.modules-left, .modules-center, .modules-right {
+.modules-left,
+.modules-center,
+.modules-right {
   padding: 1px 10px;
   /* margin: 5px 8px 0px 8px; */
   margin: 0px;
@@ -73,7 +75,7 @@ tooltip label {
 }
 
 .modules-center {
-  font-size: .5rem;
+  font-size: 0.5rem;
   border-radius: 0 0 10px 10px;
 }
 
@@ -82,7 +84,13 @@ tooltip label {
   font-family: "JetBrainsMono Nerd Font";
 }
 
-#clock, #network, #custom-quickmenu, #pulseaudio, #battery, #custom-power {
+#clock,
+#network,
+#custom-quickmenu,
+#custom-caffeine,
+#pulseaudio,
+#battery,
+#custom-power {
   padding: 0 2px 0 5px;
   margin: 0 2px;
   /* background-color: @bg1; */
@@ -90,14 +98,13 @@ tooltip label {
   color: @fg0;
 }
 
-
 /* _______________
   | LEFT MODULES |
   --------------- */
 
 #custom-logo {
   font-family: "JetBrainsMono Nerd Font";
-  font-size: .92rem;
+  font-size: 0.92rem;
 }
 #custom-logo:hover {
   color: @fg3;
@@ -105,7 +112,7 @@ tooltip label {
 
 #clock {
   font-family: "FiraCode Nerd Font";
-  font-size: .92rem;
+  font-size: 0.92rem;
   background-color: transparent;
   color: @fg1;
   border-radius: 5px;
@@ -122,8 +129,6 @@ tooltip {
   font-family: "FiraCode Nerd Font";
 }
 
-
-
 /* _________________
   | CENTER MODULES |
   ----------------- */
@@ -136,7 +141,6 @@ tooltip {
   background-color: @bg2;
 }
 
-
 #workspaces button {
   background-color: @bg3;
   margin: 0;
@@ -144,7 +148,7 @@ tooltip {
   min-width: 20px;
   font-weight: bolder;
   transition: all 0.2s ease-in-out;
-  box-shadow:0px 0px 0px 6.5px @bg0 inset;
+  box-shadow: 0px 0px 0px 6.5px @bg0 inset;
 }
 
 #workspaces button.active {
@@ -198,3 +202,4 @@ tooltip {
   background-color: @hgruv_red;
   color: @bg1;
 }
+
