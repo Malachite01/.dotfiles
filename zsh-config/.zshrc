@@ -31,6 +31,8 @@ alias create-webapp='~/.config/hypr/scripts/create-webapp.sh'
 alias remove-webapp='~/.config/hypr/scripts/remove-webapp.sh'
 alias list-webapp='~/.config/hypr/scripts/list-webapp.sh'
 
+alias idle-inhibitor='~/.config/hypr/scripts/idle_inhibitor.sh'
+
 # Lsd
 alias ls='lsd'
 

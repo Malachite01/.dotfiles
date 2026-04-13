@@ -72,7 +72,3 @@ update-desktop-database ~/.local/share/applications 2>/dev/null || true
 echo -e "\n✅ Web app créée: $APP_NAME"
 echo "   Fichier:  $DESKTOP_FILE"
 echo "   Icône: $ICON_PATH"
-echo ""
-echo "🚀 Lancez avec:  SUPER + SPACE → '$APP_NAME'"
-echo ""
-echo "🧪 Test:  flatpak run net.waterfox.waterfox --new-window $APP_URL"

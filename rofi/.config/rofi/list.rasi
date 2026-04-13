@@ -90,7 +90,7 @@ element.normal.normal {
 }
 element.selected.normal {
     text-color: @fg0;
-    background-color: @bg;
+    background-color: @bg1;
     border-radius: 10;
 }
 element.normal.active {

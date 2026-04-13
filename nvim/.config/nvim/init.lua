@@ -12,6 +12,7 @@ vim.opt.wrap = false
 vim.opt.clipboard = "unnamedplus"
 vim.opt.undofile = true
 vim.opt.winborder = "rounded"
+vim.opt.termguicolors = true
 
 require("config.lazy")
 
