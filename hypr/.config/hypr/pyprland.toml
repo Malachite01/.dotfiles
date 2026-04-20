@@ -2,7 +2,7 @@
 plugins = ["layout_center"]
 
 [layout_center]
-margin = [31, 60]
+margin = [20, 45]
 offset = [0, 25]
 next = "movefocus r"
 prev = "movefocus l"
