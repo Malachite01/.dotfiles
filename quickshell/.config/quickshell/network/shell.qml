@@ -43,7 +43,7 @@ ShellRoot {
                 right: 20
             }
 
-            implicitWidth: 650
+            implicitWidth: 580
             implicitHeight: 920
 
             color: "transparent"

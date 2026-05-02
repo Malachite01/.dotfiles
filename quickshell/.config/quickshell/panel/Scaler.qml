@@ -1,7 +1,6 @@
 import QtQuick
 import Quickshell
 import Quickshell.Io
-import "WindowRegistry.js" as LayoutMath 
 
 Item {
     id: root
@@ -11,10 +10,14 @@ Item {
     property real uiScale: 1.0
     readonly property real densityScale: 0.9
 
-    property real baseScale: LayoutMath.getScale(currentWidth, uiScale) * densityScale
+    function getScale(width, scale) {
+        return (width / 1920.0) * scale;
+    }
+
+    property real baseScale: getScale(currentWidth, uiScale) * densityScale
     
     function s(val) { 
-        return LayoutMath.s(val, baseScale); 
+        return Math.round(val * baseScale); 
     }
 
     Process {
