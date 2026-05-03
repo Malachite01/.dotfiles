@@ -1,0 +1,268 @@
+/* ── Variables ─────────────────────────────────────────────────────────────
+   Couleurs calquées sur MatugenColors.qml (Gruvbox dark)
+   Fond du panel : Qt.rgba(0.06, 0.07, 0.08, 0.9) = #0f1214 à 90%
+*/
+:root {
+  --bg: rgba(15, 18, 20, 0.92);
+  --bg-widget: rgba(22, 26, 28, 0.88);
+  --surface0: #32302f;
+  --surface1: #504945;
+  --surface2: #665c54;
+  --overlay0: #7c6f64;
+  --overlay1: #928374;
+  --overlay2: #a89984;
+  --text: #ebdbb2;
+  --subtext0: #d5c4a1;
+  --subtext1: #bdae93;
+  --red: #fb4934;
+  --green: #b8bb26;
+  --yellow: #fabd2f;
+  --blue: #83a598;
+  --peach: #fe8019;
+  --teal: #8ec07c;
+
+  --radius: 16px;
+  --radius-sm: 10px;
+  --border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* ── Control center (panneau principal) ────────────────────────────────── */
+.control-center {
+  background: var(--bg);
+  border-radius: var(--radius);
+  border: var(--border);
+  padding: 8px;
+  box-shadow: none;
+}
+
+/* ── Widgets génériques ────────────────────────────────────────────────── */
+.widgets > .widget {
+  background: var(--bg-widget);
+  border-radius: var(--radius);
+  border: var(--border);
+  padding: 12px 14px;
+  margin: 0 0 6px 0;
+}
+
+/* ── Widget DND ────────────────────────────────────────────────────────── */
+.widget-dnd {
+  font-size: 12px;
+  color: var(--overlay1);
+}
+.widget-dnd > switch {
+  border-radius: 12px;
+  background: var(--surface1);
+  border: var(--border);
+}
+.widget-dnd > switch:checked {
+  background: var(--blue);
+}
+.widget-dnd > switch slider {
+  background: var(--text);
+  border-radius: 10px;
+  min-width: 20px;
+  min-height: 20px;
+}
+
+/* ── Widget Inhibitors ─────────────────────────────────────────────────── */
+.widget-inhibitors {
+  font-size: 11px;
+  color: var(--overlay1);
+}
+.widget-inhibitors > button {
+  background: var(--surface1);
+  border-radius: var(--radius-sm);
+  border: var(--border);
+  color: var(--subtext0);
+  font-size: 11px;
+  padding: 4px 12px;
+}
+.widget-inhibitors > button:hover {
+  background: var(--surface2);
+}
+
+/* ── Widget MPRIS ──────────────────────────────────────────────────────── */
+.widget-mpris {
+  background: transparent;
+  border-radius: 0;
+  padding: 0;
+  border: none;
+}
+.widget-mpris > carouselindicatordots {
+  padding: 4px;
+  margin-top: 4px;
+}
+.widget-mpris-player {
+  background: var(--bg-widget);
+  border-radius: var(--radius);
+  border: var(--border);
+  box-shadow: none;
+  padding: 10px;
+  margin: 0 0 6px 0;
+}
+.widget-mpris-player .widget-mpris-title {
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--text);
+}
+.widget-mpris-player .widget-mpris-subtitle {
+  font-size: 11px;
+  color: var(--overlay1);
+}
+.widget-mpris > box > button {
+  background: var(--surface1);
+  border-radius: var(--radius-sm);
+  border: var(--border);
+  padding: 6px 10px;
+}
+.widget-mpris > box > button:hover {
+  background: var(--surface2);
+}
+
+/* ── Groupes de notifications ──────────────────────────────────────────── */
+.notification-group {
+  background: transparent;
+  border-radius: var(--radius);
+  padding: 4px 0;
+  margin: 0;
+}
+.notification-group-headers {
+  font-size: 10px;
+  color: var(--overlay0);
+  padding: 0 4px 4px 4px;
+}
+.notification-group-collapse-button,
+.notification-group-collapse-button:hover {
+  background: var(--surface1);
+  border-radius: var(--radius-sm);
+  border: var(--border);
+  color: var(--overlay2);
+  font-size: 11px;
+  padding: 2px 8px;
+  margin-bottom: 4px;
+}
+
+/* ── Carte de notification ─────────────────────────────────────────────── */
+.notification-row {
+  margin: 0 0 6px 0;
+}
+.notification {
+  background: var(--bg-widget);
+  border-radius: var(--radius);
+  border: var(--border);
+  padding: 12px 14px;
+  color: var(--text);
+}
+.notification:hover {
+  background: rgba(40, 45, 48, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Urgence critique */
+.notification.critical {
+  background: rgba(59, 20, 18, 0.95);
+  border: 1px solid rgba(251, 73, 52, 0.45);
+}
+.notification.critical .notification-action {
+  border-color: rgba(251, 73, 52, 0.3);
+}
+
+/* Urgence low — légèrement atténué */
+.notification.low {
+  background: rgba(18, 22, 24, 0.85);
+}
+
+/* ── Contenu notif ─────────────────────────────────────────────────────── */
+.notification-content {
+  padding: 0;
+}
+.notification-default-action {
+  background: transparent;
+  border-radius: var(--radius);
+  padding: 0;
+  border: none;
+}
+.notification-default-action:hover {
+  background: transparent;
+}
+
+.notification-icon {
+  min-width: 32px;
+  min-height: 32px;
+  border-radius: 8px;
+  margin-right: 10px;
+}
+
+.notification-summary {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+}
+.notification-body {
+  font-size: 11px;
+  color: var(--subtext0);
+}
+.notification-time {
+  font-size: 10px;
+  color: var(--overlay0);
+}
+.notification-app-name {
+  font-size: 10px;
+  color: var(--overlay1);
+}
+
+/* ── Boutons d'action ──────────────────────────────────────────────────── */
+.notification-action {
+  background: var(--surface1);
+  border-radius: var(--radius-sm);
+  border: var(--border);
+  color: var(--subtext0);
+  font-size: 10px;
+  padding: 4px 12px;
+  margin-top: 6px;
+}
+.notification-action:hover {
+  background: var(--surface2);
+  color: var(--text);
+}
+.notification-action:last-child {
+  margin-right: 0;
+}
+
+/* ── Bouton fermer ─────────────────────────────────────────────────────── */
+.close-button {
+  background: transparent;
+  border-radius: 6px;
+  border: none;
+  color: var(--overlay2);
+  font-size: 13px;
+  min-width: 20px;
+  min-height: 20px;
+  padding: 0;
+}
+.close-button:hover {
+  background: var(--surface1);
+  color: var(--text);
+}
+
+/* ── Placeholder (aucune notif) ────────────────────────────────────────── */
+.control-center-list-placeholder {
+  color: var(--overlay0);
+  font-size: 11px;
+  padding: 24px;
+}
+
+/* ── Scrollbar ─────────────────────────────────────────────────────────── */
+scrollbar {
+  background: transparent;
+  border: none;
+}
+scrollbar slider {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  min-width: 4px;
+  min-height: 4px;
+}
+scrollbar slider:hover {
+  background: rgba(255, 255, 255, 0.2);
+}

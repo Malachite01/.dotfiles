@@ -90,6 +90,7 @@ tooltip label {
 #custom-caffeine,
 #pulseaudio,
 #battery,
+#custom-notification,
 #custom-power {
   padding: 0 2px 0 5px;
   margin: 0 2px;
@@ -202,4 +203,3 @@ tooltip {
   background-color: @hgruv_red;
   color: @bg1;
 }
-

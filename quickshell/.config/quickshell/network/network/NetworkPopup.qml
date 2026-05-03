@@ -9,21 +9,16 @@ import "../"
 
 Item {
     FontLoader {
-        id: jetbrainsMonoFont
-        source: "/home/pandora/.local/share/fonts/JetBrains-Mono-Nerd-Font-Complete.ttf"
-    }
-    FontLoader {
-        id: iosevkaNerdFont
-        source: "/home/pandora/.local/share/fonts/Iosevka-Nerd-Font-Complete.ttf"
+        id: panelFont
+        source: "/home/pandora/.dotfiles/quickshell/.config/quickshell/panel/JetBrainsMonoNerdFont-Regular.ttf"
     }
     id: window
 
-    readonly property string uiFontFamily: jetbrainsMonoFont.status === FontLoader.Ready
-                                            ? jetbrainsMonoFont.name
+    readonly property string fontFamily: panelFont.status === FontLoader.Ready
+                                            ? panelFont.name
                                             : "JetBrainsMono Nerd Font"
-    readonly property string iconFontFamily: iosevkaNerdFont.status === FontLoader.Ready
-                                              ? iosevkaNerdFont.name
-                                              : "Iosevka Nerd Font"
+    readonly property string uiFontFamily: fontFamily
+    readonly property string iconFontFamily: fontFamily
     
     // --- Responsive Scaling Logic ---
     Scaler {
@@ -33,6 +28,22 @@ Item {
     
     function s(val) { 
         return scaler.s(val); 
+    }
+
+    property string requestedMode: ""
+    property var shellRoot: null
+
+    function normalizeMode(mode) {
+        if (mode === "network" || mode === "wifi") return "wifi";
+        if (mode === "bluetooth" || mode === "bt") return "bt";
+        return "";
+    }
+
+    function applyRequestedMode() {
+        let normalizedMode = normalizeMode(window.requestedMode);
+        if (normalizedMode !== "" && window.activeMode !== normalizedMode) {
+            window.activeMode = normalizedMode;
+        }
     }
 
     function safeUiIcon(iconCandidate, fallbackIcon) {
@@ -52,8 +63,17 @@ Item {
                 window.pendingWifiId = ""; window.pendingWifiSsid = "";
                 return;
             }
-            window.playSfx("switch.wav");
             window.activeMode = window.activeMode === "wifi" ? "bt" : "wifi";
+        }
+    }
+
+    Shortcut {
+        sequence: "Escape"
+        context: Qt.ApplicationShortcut
+        onActivated: {
+            if (window.shellRoot) {
+                window.shellRoot.networkVisible = false;
+            }
         }
     }
 
@@ -79,6 +99,7 @@ Item {
         stdout: StdioCollector {
             onStreamFinished: {
                 let mode = this.text.trim();
+                if (window.requestedMode !== "" && mode !== window.requestedMode) return;
                 if ((mode === "wifi" || mode === "bt") && window.activeMode !== mode) {
                     window.ignoreNextModeFileUpdate = true;
                     window.activeMode = mode;
@@ -89,29 +110,27 @@ Item {
 
     Timer {
         interval: 100
-        running: true
+        running: false
         repeat: true
         onTriggered: modeReader.running = true
     }
 
     Component.onCompleted: {
-        Quickshell.execDetached(["bash", "-c", "mkdir -p '" + window.cacheDir + "'; if [ ! -f '" + window.modeFilePath + "' ]; then echo '" + activeMode + "' > '" + window.modeFilePath + "'; fi"]);
+        applyRequestedMode();
+
+        Quickshell.execDetached(["bash", "-c", "mkdir -p '" + window.cacheDir + "'; echo '" + activeMode + "' > '" + window.modeFilePath + "'"]);
 
         if (cache.lastWifiJson !== "") processWifiJson(cache.lastWifiJson);
         if (cache.lastBtJson !== "") processBtJson(cache.lastBtJson);
         introState = 1.0;
         
         if (window.activeMode === "wifi") savedNetworksFetcher.running = true;
+        modeReader.running = true;
     }
 
+    onRequestedModeChanged: applyRequestedMode()
+
     function playSfx(filename) {
-        try {
-            let rawUrl = Qt.resolvedUrl("sounds/" + filename).toString();
-            let cleanPath = rawUrl;
-            if (cleanPath.indexOf("file://") === 0) cleanPath = cleanPath.substring(7); 
-            let cmd = "pw-play '" + cleanPath + "' 2>/dev/null || paplay '" + cleanPath + "' 2>/dev/null";
-            Quickshell.execDetached(["sh", "-c", cmd]);
-        } catch(e) {}
     }
 
     MatugenColors { id: _theme }
@@ -700,10 +719,7 @@ Item {
 
         Rectangle {
             anchors.fill: parent
-            radius: window.s(20)
-            color: window.base
-            border.color: window.surface0
-            border.width: 1
+            color: Qt.rgba(0.06, 0.07, 0.08, 0.9)
             clip: true
             
             Item {

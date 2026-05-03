@@ -15,8 +15,8 @@ NetworkCard {
     Process {
         id: wifiPoller
         command: ["bash", "-c",
-            "SSID=$(nmcli -t -f active,ssid dev wifi 2>/dev/null | grep '^yes' | cut -d: -f2); " +
             "PWR=$(nmcli radio wifi); " +
+            "SSID=$(nmcli -t -f NAME connection show --active 2>/dev/null | grep -v lo | grep -v wired | head -1); " +
             "SIG=$(nmcli -t -f IN-USE,SIGNAL dev wifi 2>/dev/null | grep '^\\*' | cut -d: -f2); " +
             "echo \"$PWR|${SSID:-disconnected}|${SIG:-0}\""
         ]
@@ -43,7 +43,10 @@ NetworkCard {
         command: ["bash", "-c", root.enabled ? "nmcli radio wifi off" : "nmcli radio wifi on"]
     }
 
-    onCardClicked: Quickshell.execDetached(["bash", "-c", "qs ipc -c network call network toggle"])
+    onCardClicked: {
+        root.closeRequested();
+        Quickshell.execDetached(["bash", "-c", "qs ipc -c network call network showNetwork"])
+    }
     onIconClicked: {
         wifiToggle.running = true;
         Qt.callLater(() => wifiPoller.running = true);

@@ -5,19 +5,20 @@ import Quickshell.Io
 Item {
     id: root
 
-    // Gruvbox Dark palette — edit qs_colors.json to change colors
     property color base:     "#282828"
     property color mantle:   "#1d2021"
     property color crust:    "#141617"
     property color text:     "#ebdbb2"
     property color subtext0: "#d5c4a1"
     property color subtext1: "#bdae93"
+    property color card_bg_color: "#3c3836"
     property color surface0: "#3c3836"
     property color surface1: "#504945"
     property color surface2: "#665c54"
     property color overlay0: "#7c6f64"
     property color overlay1: "#928374"
     property color overlay2: "#a89984"
+    property color black:    "#32302f"
     property color blue:     "#83a598"
     property color sapphire: "#76a5af"
     property color peach:    "#fe8019"
@@ -31,11 +32,10 @@ Item {
 
     property string rawJson: ""
 
-    // Reads qs_colors.json from the same directory as this file.
-    // You can edit that JSON at runtime — colors update within 1 second.
+    // Reads the panel theme so the network module stays visually aligned.
     Process {
         id: themeReader
-        command: ["cat", Quickshell.env("HOME") + "/.config/quickshell/network/qs_colors.json"]
+        command: ["cat", Quickshell.env("HOME") + "/.config/quickshell/panel/qs_colors.json"]
         stdout: StdioCollector {
             onStreamFinished: {
                 let txt = this.text.trim();
@@ -49,12 +49,14 @@ Item {
                         if (c.text)     root.text     = c.text;
                         if (c.subtext0) root.subtext0 = c.subtext0;
                         if (c.subtext1) root.subtext1 = c.subtext1;
+                        if (c.card_bg_color) root.card_bg_color = c.card_bg_color;
                         if (c.surface0) root.surface0 = c.surface0;
                         if (c.surface1) root.surface1 = c.surface1;
                         if (c.surface2) root.surface2 = c.surface2;
                         if (c.overlay0) root.overlay0 = c.overlay0;
                         if (c.overlay1) root.overlay1 = c.overlay1;
                         if (c.overlay2) root.overlay2 = c.overlay2;
+                        if (c.black)    root.black    = c.black;
                         if (c.blue)     root.blue     = c.blue;
                         if (c.sapphire) root.sapphire = c.sapphire;
                         if (c.peach)    root.peach    = c.peach;

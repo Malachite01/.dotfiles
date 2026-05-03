@@ -8,6 +8,8 @@ Column {
     required property var    colors
     required property string fontFamily
     spacing: 18
+    
+    signal closeRequested()
 
     property real volume:     0.55
     property bool muted:      false
@@ -100,6 +102,9 @@ Column {
             volSetter.val = v;
             volSetter.running = true;
         }
-        onBtnClicked: Quickshell.execDetached(["bash", "-c", "pavucontrol &"])
+        onBtnClicked: {
+            Quickshell.execDetached(["bash", "-c", "pavucontrol &"]);
+            root.closeRequested();
+        }
     }
 }

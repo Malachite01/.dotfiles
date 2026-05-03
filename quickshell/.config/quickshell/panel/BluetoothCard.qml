@@ -13,7 +13,7 @@ NetworkCard {
         ? "désactivé"
         : root.deviceCount > 0
             ? (root.connectedName || root.deviceCount + " appareil(s)")
-            : "aucun appareil connecté"
+            : "Aucun appareil connecté"
     icon: root.enabled ? (root.connectedName ? "󰂱" : "󰂯") : "󰂲"
 
     Process {
@@ -47,7 +47,10 @@ NetworkCard {
         command: ["bash", "-c", root.enabled ? "bluetoothctl power off" : "bluetoothctl power on"]
     }
 
-    onCardClicked: Quickshell.execDetached(["bash", "-c", "qs ipc -c network call network toggle"])
+    onCardClicked: {
+        root.closeRequested();
+        Quickshell.execDetached(["bash", "-c", "qs ipc -c network call network showBluetooth"])
+    }
     onIconClicked: {
         btToggle.running = true;
         Qt.callLater(() => btPoller.running = true);

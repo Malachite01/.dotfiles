@@ -17,17 +17,45 @@ Item {
     readonly property var perfProfiles: [
         { icon: "󰌪", sublabel: "Economie",    color: "#8ec07c" },
         { icon: "",  sublabel: "Equilibre",   color: "#83a598" },
+        { icon: "",  sublabel: "Bureau",   color: '#fabd2f' },
         { icon: "",  sublabel: "Boost", color: "#fb4934" }
     ]
 
-    Process { id: idleProc; command: ["bash", "-c", "echo 'TODO: toggle idle'"] }
-    Process { id: nightProc; command: ["bash", "-c", "echo 'TODO: toggle night mode'"] }
-    Process { id: vpnProc;  command: ["bash", "-c", "echo 'TODO: toggle vpn'"] }
+    readonly property var tunedProfiles: [
+        "laptop-battery-powersave",
+        "balanced-battery",
+        "desktop",
+        "throughput-performance"
+    ]
 
+    Process { id: idleProc; command: ["bash", "/home/pandora/.config/hypr/scripts/idle_inhibitor.sh"] }
+    Process { id: nightProc; command: ["bash", "/home/pandora/.config/hypr/scripts/night.sh"] }
+    Process { id: vpnProc;  command: ["bash", "-c", "echo 'TODO: toggle vpn'"] }
     Process {
         id: perfProc
         property string profile: ""
-        command: ["bash", "-c", "echo 'TODO: set profile " + profile + "'"]
+        command: ["bash", "/home/pandora/.config/hypr/scripts/battery/battery-switch.sh", profile]
+    }
+
+    // Lecture profil actif au démarrage
+    Process {
+        id: perfStateCheck
+        command: ["bash", "-c", "tuned-adm active | awk '{print $NF}'"]
+        running: true
+        stdout: SplitParser {
+            onRead: data => {
+                let idx = root.tunedProfiles.indexOf(data.trim())
+                if (idx !== -1) root.perfProfile = idx
+            }
+        }
+    }
+
+    // Resync si udev a changé le profil (plug/unplug)
+    Timer {
+        interval: 10000
+        running: true
+        repeat: true
+        onTriggered: perfStateCheck.running = true
     }
 
     GridLayout {
@@ -58,9 +86,9 @@ Item {
             currentIndex: root.perfProfile
             cycleStates:  root.perfProfiles
             onCycled: (idx) => {
-                root.perfProfile = idx;
-                perfProc.profile = ["powersave", "balanced", "performance"][idx];
-                perfProc.running = true;
+                root.perfProfile = idx
+                perfProc.profile = root.tunedProfiles[idx]
+                perfProc.running = true
             }
         }
 
@@ -69,12 +97,13 @@ Item {
             colors: root.colors
             fontFamily: root.fontFamily
             active:   root.idleOff
-            icon:     root.idleOff ? "󰈈" : "󰈉"
-            label:    "Veille"
-            sublabel: root.idleOff ? "off" : "on"
+            icon:     root.idleOff ? "󰅶" : "󰾪"
+            label:    "Caffeine"
+            sublabel: root.idleOff ? "on" : "off"
             onToggled: {
                 root.idleOff = !root.idleOff;
                 idleProc.running = true;
+
             }
         }
 

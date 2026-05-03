@@ -8,6 +8,15 @@ import Quickshell.Io
 import "../"
 
 Item {
+    FontLoader {
+        id: panelFont
+        source: "/home/pandora/.dotfiles/quickshell/.config/quickshell/panel/JetBrainsMonoNerdFont-Regular.ttf"
+    }
+
+    readonly property string fontFamily: panelFont.status === FontLoader.Ready
+                                            ? panelFont.name
+                                            : "JetBrainsMono Nerd Font"
+
     id: window
     focus: true
 
@@ -33,13 +42,6 @@ Item {
     }
 
     function playSfx(filename) {
-        try {
-            let rawUrl = Qt.resolvedUrl("sounds/" + filename).toString();
-            let cleanPath = rawUrl;
-            if (cleanPath.indexOf("file://") === 0) cleanPath = cleanPath.substring(7); 
-            let cmd = "pw-play '" + cleanPath + "' 2>/dev/null || paplay '" + cleanPath + "' 2>/dev/null";
-            Quickshell.execDetached(["sh", "-c", cmd]);
-        } catch(e) {}
     }
 
     MatugenColors { id: _theme }
@@ -112,7 +114,7 @@ Item {
             
             let obj = {
                 id: d.id || "", name: d.name || "", icon: d.icon || "", action: d.action || "",
-                isInfoNode: d.isInfoNode || false, isActionable: d.isActionable || false, 
+                                    font.family: window.fontFamily
                 cmdStr: d.cmdStr || "", parentIndex: 0
             };
 
@@ -122,7 +124,7 @@ Item {
                 if (foundIdx !== i) { listModel.move(foundIdx, i, 1); }
                 for (let key in obj) { 
                     if (listModel.get(i)[key] !== obj[key]) {
-                        listModel.setProperty(i, key, obj[key]); 
+                                    font.family: window.fontFamily; font.weight: Font.Black
                     }
                 }
             }
@@ -131,8 +133,7 @@ Item {
 
     function updateInfoNodes() {
         let nodes = [];
-        let obj = window.currentCore;
-        
+                                    font.family: window.fontFamily; font.weight: Font.Bold; font.pixelSize: window.s(11)
         if (window.currentConn && obj) {
             nodes.push({ id: "ip", name: obj.ip || "No IP", icon: "󰩟", action: "IP Address", isInfoNode: true });
             nodes.push({ id: "spd", name: obj.speed || "Unknown", icon: "󰓅", action: "Link Speed", isInfoNode: true });
@@ -204,10 +205,7 @@ Item {
 
         Rectangle {
             anchors.fill: parent
-            radius: window.s(20)
-            color: window.base
-            border.color: window.surface0
-            border.width: 1
+            color: Qt.rgba(0.06, 0.07, 0.08, 0.9)
             clip: true
 
             Rectangle {
@@ -578,14 +576,14 @@ Item {
 
                             Text {
                                 Layout.alignment: Qt.AlignHCenter
-                                font.family: "Iosevka Nerd Font"
+                                font.family: window.fontFamily
                                 font.pixelSize: window.s(48)
                                 color: window.currentPower ? window.overlay0 : window.surface2
                                 text: "󰈂"
                             }
                             Text {
                                 Layout.alignment: Qt.AlignHCenter
-                                font.family: "JetBrains Mono"; font.weight: Font.Bold
+                                font.family: window.fontFamily; font.weight: Font.Bold
                                 font.pixelSize: window.s(14)
                                 color: window.overlay0
                                 text: window.currentPowerPending 
@@ -608,7 +606,7 @@ Item {
 
                                 Text {
                                     Layout.alignment: Qt.AlignHCenter
-                                    font.family: "Iosevka Nerd Font"
+                                    font.family: window.fontFamily
                                     font.pixelSize: window.s(48)
                                     color: window.crust
                                     text: coreMa.containsMouse ? "󰈂" : (window.currentCore ? window.currentCore.icon : "")
@@ -618,7 +616,7 @@ Item {
                                     Layout.alignment: Qt.AlignHCenter
                                     Layout.maximumWidth: window.s(150)
                                     horizontalAlignment: Text.AlignHCenter
-                                    font.family: "JetBrains Mono"; font.weight: Font.Black
+                                    font.family: window.fontFamily; font.weight: Font.Black
                                     font.pixelSize: window.s(16)
                                     color: window.crust
                                     text: window.currentCore ? window.currentCore.name : ""
@@ -627,7 +625,7 @@ Item {
                                 }
                                 Text {
                                     Layout.alignment: Qt.AlignHCenter
-                                    font.family: "JetBrains Mono"; font.weight: Font.Bold; font.pixelSize: window.s(11)
+                                    font.family: window.fontFamily; font.weight: Font.Bold; font.pixelSize: window.s(11)
                                     color: coreMa.containsMouse ? window.crust : "#99000000"
                                     text: centralCore.disconnectFill > 0.01 ? "Hold..." : "Connected"
                                     Behavior on color { ColorAnimation { duration: 200 } }
@@ -651,7 +649,7 @@ Item {
 
                                     Text {
                                         Layout.alignment: Qt.AlignHCenter
-                                        font.family: "Iosevka Nerd Font"
+                                        font.family: window.fontFamily
                                         font.pixelSize: window.s(48)
                                         color: window.text
                                         text: coreMa.containsMouse ? "󰈂" : (window.currentCore ? window.currentCore.icon : "")
@@ -660,7 +658,7 @@ Item {
                                         Layout.alignment: Qt.AlignHCenter
                                         Layout.maximumWidth: window.s(150)
                                         horizontalAlignment: Text.AlignHCenter
-                                        font.family: "JetBrains Mono"; font.weight: Font.Black
+                                        font.family: window.fontFamily; font.weight: Font.Black
                                         font.pixelSize: window.s(16)
                                         color: window.text
                                         text: window.currentCore ? window.currentCore.name : ""
@@ -668,8 +666,7 @@ Item {
                                     }
                                     Text {
                                         Layout.alignment: Qt.AlignHCenter
-                                        font.family: "JetBrains Mono"; font.weight: Font.Bold; font.pixelSize: window.s(11)
-                                        color: window.text
+                                        font.family: window.fontFamily; font.weight: Font.Bold; font.pixelSize: window.s(11)
                                         text: centralCore.disconnectFill > 0.01 ? "Hold..." : "Connected"
                                     }
                                 }
@@ -678,7 +675,7 @@ Item {
 
                         MouseArea {
                             id: coreMa
-                            anchors.fill: parent
+                                        font.family: window.fontFamily
                             hoverEnabled: true
                             cursorShape: window.currentConn ? Qt.PointingHandCursor : Qt.ArrowCursor
                             
@@ -687,7 +684,7 @@ Item {
                                     coreDrainAnim.stop();
                                     coreFillAnim.start();
                                 }
-                            }
+                                        font.family: window.fontFamily; font.weight: Font.Black
                             onReleased: {
                                 if (!centralCore.disconnectTriggered) {
                                     coreFillAnim.stop();
@@ -695,7 +692,7 @@ Item {
                                 }
                             }
                         }
-
+                                        font.family: window.fontFamily; font.weight: Font.Bold; font.pixelSize: window.s(11)
                         NumberAnimation {
                             id: coreFillAnim
                             target: centralCore
@@ -857,7 +854,7 @@ Item {
                                     spacing: window.s(10)
                                     
                                     Text {
-                                        font.family: "Iosevka Nerd Font"
+                                        font.family: window.fontFamily
                                         font.pixelSize: window.s(20)
                                         color: window.activeColor
                                         text: icon
@@ -879,7 +876,7 @@ Item {
                                                 anchors.leftMargin: floatCard.textOffset
                                                 anchors.verticalCenter: parent.verticalCenter
                                                 text: floatCard.itemName
-                                                font.family: "JetBrains Mono"
+                                                font.family: window.fontFamily
                                                 font.weight: Font.Bold
                                                 font.pixelSize: window.s(13)
                                                 color: window.text
@@ -890,7 +887,7 @@ Item {
                                                 anchors.verticalCenter: parent.verticalCenter
                                                 visible: floatCard.doMarquee
                                                 text: floatCard.itemName
-                                                font.family: "JetBrains Mono"
+                                                font.family: window.fontFamily
                                                 font.weight: Font.Bold
                                                 font.pixelSize: window.s(13)
                                                 color: window.text
@@ -898,7 +895,7 @@ Item {
                                         }
                                         
                                         Text {
-                                            font.family: "JetBrains Mono"
+                                            font.family: window.fontFamily
                                             font.pixelSize: window.s(10)
                                             color: window.overlay0
                                             text: action
@@ -948,7 +945,7 @@ Item {
                 Text {
                     id: pwrIcon
                     anchors.centerIn: parent
-                    font.family: "Iosevka Nerd Font"
+                    font.family: window.fontFamily
                     font.pixelSize: window.s(22)
                     color: window.currentPower ? window.crust : window.text
                     text: window.currentPowerPending ? "󰑮" : "" 

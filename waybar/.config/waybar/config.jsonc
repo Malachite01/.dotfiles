@@ -4,6 +4,7 @@
   "modules-center": ["hyprland/workspaces"],
   "modules-right": [
     "custom/quickmenu",
+    "custom/notification",
     "custom/caffeine",
     "pulseaudio",
     "custom/bluetooth",
@@ -24,24 +25,7 @@
     "locale": "fr_FR.UTF-8",
     "format": "{:L%a %d %b %H:%M}",
     "format-alt": "{:%H:%M}",
-    "tooltip-format": "<tt><small >{calendar}</small></tt>",
-    "calendar": {
-      "mode": "month",
-      "weeks-pos": "left",
-      "on-scroll": 1,
-      "format": {
-        "months": "<span color='#7DAEA3'><b>{}</b></span>",
-        "days": "<span color='#fbf1c7'> {} </span>",
-        "weeks": "<span color='#d5c4a1'><b>{}</b></span>",
-        "weekdays": "<span color='#d5c4a1'><b>{}</b></span>",
-        "today": "<span color='#7DAEA3'><b>{}</b></span>",
-      },
-    },
-    "actions": {
-      "on-click-right": "mode",
-      "on-scroll-up": "shift_up",
-      "on-scroll-down": "shift_down",
-    },
+    "tooltip": false,
   },
 
   //    _________________
@@ -63,6 +47,26 @@
     "format": " ",
     "on-click": "qs ipc -c panel call panel toggle",
     "tooltip": false,
+  },
+  "custom/notification": {
+    "tooltip": false,
+    "format": "{icon}",
+    "format-icons": {
+      "notification": "󱅫 ",
+      "none": " ",
+      "dnd-notification": " ",
+      "dnd-none": "󰂛 ",
+      "inhibited-notification": " ",
+      "inhibited-none": " ",
+      "dnd-inhibited-notification": " ",
+      "dnd-inhibited-none": " ",
+    },
+    "return-type": "json",
+    "exec-if": "which swaync-client",
+    "exec": "swaync-client -swb",
+    "on-click": "sleep 0.1 && swaync-client -t -sw",
+    "on-click-right": "sleep 0.1 && swaync-client -d -sw",
+    "escape": true,
   },
   "custom/caffeine": {
     "exec": "[[ -f /tmp/hypr-caffeine-state ]] && echo '󰅶 ' || echo ''",
@@ -93,14 +97,14 @@
   },
   "custom/bluetooth": {
     "exec": "bluetoothctl show | grep -q 'Powered: yes' && echo '  ' || echo ''",
-    "on-click": "qs ipc -c network call network toggle",
+    "on-click": "qs ipc -c network call network showBluetooth",
     "interval": 2,
     "tooltip": false,
   },
   "network": {
     "interface": "wlp2s0",
     "format": "{ifname}",
-    "on-click": "qs ipc -c network call network toggle",
+    "on-click": "qs ipc -c network call network showNetwork",
     // "format-wifi": "{essid} ({signalStrength}%) ",
     "format-wifi": "{icon}",
     "format-ethernet": " {bandwidthDownBytes}  {bandwidthUpBytes} {ipaddr}/{cidr} 󰊗 ",

@@ -44,6 +44,7 @@ Rectangle {
 
     signal cardClicked()
     signal iconClicked()
+    signal closeRequested()
 
     // --- appearance ---
     height: 68

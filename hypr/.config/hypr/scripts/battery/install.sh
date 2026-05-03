@@ -27,4 +27,10 @@ sudo udevadm control --reload
 sudo udevadm trigger
 
 sudo loginctl enable-linger pandora
+
+# a faire pour batteryswitch:
+# sudo visudo -f /etc/sudoers.d/battery-switch
+# puis
+# pandora ALL=(ALL) NOPASSWD: /usr/bin/tuned-adm
+# pandora ALL=(ALL) NOPASSWD: /usr/bin/tee /sys/devices/system/cpu/cpufreq/boost
 echo "Installation terminée"

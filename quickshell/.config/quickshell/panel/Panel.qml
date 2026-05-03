@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
 import Quickshell
-import Quickshell.Services.Notifications
+// Notifications removed — handled elsewhere
 import Quickshell.Io
 
 Item {
@@ -11,8 +11,6 @@ Item {
 
     // Size panel from laid out content to avoid item overlap.
     implicitHeight: content.implicitHeight + 28
-
-    required property NotificationServer notifServer
 
     FontLoader {
         id: jetbrainsMonoFont
@@ -86,6 +84,7 @@ Item {
                 Layout.fillWidth: true
                 colors: colors
                 fontFamily: root.fontFamily
+                onCloseRequested: root.closeRequested()
             }
 
             BluetoothCard {
@@ -93,6 +92,7 @@ Item {
                 Layout.fillWidth: true
                 colors: colors
                 fontFamily: root.fontFamily
+                onCloseRequested: root.closeRequested()
             }
 
             SystemInfoRow {
@@ -111,26 +111,11 @@ Item {
 
             SliderRow {
                 Layout.topMargin: 15
-                Layout.bottomMargin: 25
+                Layout.bottomMargin: 5
                 Layout.fillWidth: true
                 colors: colors
                 fontFamily: root.fontFamily
-            }
-
-            Rectangle {
-                Layout.fillWidth: true
-                Layout.topMargin: 6
-                Layout.bottomMargin: 2
-                height: 1
-                color: Qt.rgba(1, 1, 1, 0.06)
-            }
-
-            NotificationList {
-                Layout.fillWidth: true
-                Layout.bottomMargin: 14
-                colors: colors
-                fontFamily: root.fontFamily
-                server: root.notifServer
+                onCloseRequested: root.closeRequested()
             }
 
         }
