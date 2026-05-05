@@ -25,6 +25,7 @@ Rectangle {
     property string label:        ""
     property int    currentIndex: 0
     property var    cycleStates:  []   // array of { icon, sublabel, color }
+    property bool   keyFocused:   false   // ← focus clavier
 
     signal cycled(int newIndex)
 
@@ -37,7 +38,7 @@ Rectangle {
     height: 65
     radius: 25
     transformOrigin: Item.Center
-    scale: area.containsMouse ? 1.02 : 1.0
+    scale: (area.containsMouse || keyFocused) ? 1.02 : 1.0
     color: colors.black
 
     Behavior on scale { NumberAnimation { duration: 140; easing.type: Easing.OutCubic } }

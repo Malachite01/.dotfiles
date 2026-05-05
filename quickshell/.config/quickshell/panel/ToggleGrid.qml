@@ -9,10 +9,22 @@ Item {
     required property string fontFamily
     height: 155
 
+    // keyFocusIndex : 0=vpn, 1=perf, 2=caffeine, 3=nuit
+    property int keyFocusIndex: -1
+
     property int  perfProfile: 1
     property bool idleOff:     false
     property bool nightOn:     false
     property bool vpnOn:       false
+
+    function toggleVpn()      { root.vpnOn  = !root.vpnOn;  vpnProc.running  = true }
+    function cyclePerfm()     {
+        root.perfProfile = (root.perfProfile + 1) % root.perfProfiles.length;
+        perfProc.profile = root.tunedProfiles[root.perfProfile];
+        perfProc.running = true;
+    }
+    function toggleCaffeine() { root.idleOff = !root.idleOff; idleProc.running = true }
+    function toggleNight()    { root.nightOn = !root.nightOn; nightProc.running = true }
 
     readonly property var perfProfiles: [
         { icon: "󰌪", sublabel: "Economie",    color: "#8ec07c" },
@@ -72,10 +84,8 @@ Item {
             icon:     root.vpnOn ? "󰯄" : "󱦃"
             label:    "VPN"
             sublabel: root.vpnOn ? "on" : "off"
-            onToggled: {
-                root.vpnOn = !root.vpnOn;
-                vpnProc.running = true;
-            }
+            keyFocused: root.keyFocusIndex === 0
+            onToggled: root.toggleVpn()
         }
 
         CycleButton {
@@ -85,6 +95,7 @@ Item {
             label:        "Performance"
             currentIndex: root.perfProfile
             cycleStates:  root.perfProfiles
+            keyFocused: root.keyFocusIndex === 1
             onCycled: (idx) => {
                 root.perfProfile = idx
                 perfProc.profile = root.tunedProfiles[idx]
@@ -100,11 +111,8 @@ Item {
             icon:     root.idleOff ? "󰅶" : "󰾪"
             label:    "Caffeine"
             sublabel: root.idleOff ? "on" : "off"
-            onToggled: {
-                root.idleOff = !root.idleOff;
-                idleProc.running = true;
-
-            }
+            keyFocused: root.keyFocusIndex === 2
+            onToggled: root.toggleCaffeine()
         }
 
         ToggleButton {
@@ -115,10 +123,8 @@ Item {
             icon:     root.nightOn ? "󱠨" : ""
             label:    "Nuit"
             sublabel: root.nightOn ? "on" : "off"
-            onToggled: {
-                root.nightOn = !root.nightOn;
-                nightProc.running = true;
-            }
+            keyFocused: root.keyFocusIndex === 3
+            onToggled: root.toggleNight()
         }
     }
 }

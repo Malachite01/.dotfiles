@@ -23,6 +23,7 @@ Rectangle {
     property string icon:     ""
     property string label:    ""
     property string sublabel: ""
+    property bool   keyFocused: false   // ← focus clavier
 
     signal toggled()
 
@@ -30,9 +31,9 @@ Rectangle {
     height: 65
     radius: 25
     transformOrigin: Item.Center
-    scale: area.containsMouse ? 1.02 : 1.0
 
-    color: area.containsMouse
+    scale: (area.containsMouse || keyFocused) ? 1.02 : 1.0
+    color: (area.containsMouse || keyFocused)
         ? Qt.lighter(root.active ? colors.black : colors.surface1, 1.3)
         : (root.active ? colors.black : colors.surface1)
 

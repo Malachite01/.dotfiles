@@ -41,10 +41,13 @@ Rectangle {
     property string title:    ""
     property string subtitle: ""
     property string icon:     ""
+    property bool   keyFocused: false   // focus clavier
 
     signal cardClicked()
     signal iconClicked()
     signal closeRequested()
+
+    function activate() { cardClicked() }
 
     // --- appearance ---
     height: 68
@@ -54,8 +57,8 @@ Rectangle {
     property bool hovered:    false
     property bool btnHovered: false
 
-    scale: hovered ? 1.02 : 1.0
-    color: hovered
+    scale: (hovered || keyFocused) ? 1.02 : 1.0
+    color: (hovered || keyFocused)
         ? Qt.lighter(root.enabled ? colors.black : colors.surface1, 1.3)
         : (root.enabled ? colors.black : colors.surface1)
 
